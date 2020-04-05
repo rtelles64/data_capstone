@@ -132,10 +132,28 @@ As a guideline, the project is broken down into a series of steps:
 **Step 4: Run ETL and Model the Data**
 - The ETL and Pipeline are created using the project files.
 
+## Tools, Technologies, and Data Model
+I chose to use the star schema due to its ease of design and rely on schema-on-read. Furthermore, I used it due to its favorability in access to S3 buckets.
+
+### ETL Process
+* Initially I start the EMR cluster and wait for data transformation to be finished, then the cluster is terminated
+* Once the data is ready, the script reads the data from S3 to create analytics tables
+* The DAG handles handles the data loading
+
 ## Datasets
 The following datasets are used in the project:
 - **I94 Immigration Data:** This data comes from the US National Tourism and Trade Office. [This](https://travel.trade.gov/research/reports/i94/historical/2016.html) is where the data comes from.
 - **U.S. City Demographic Data:** This data comes from OpenSoft. It can be found [here](https://public.opendatasoft.com/explore/dataset/us-cities-demographics/export/).
+
+## Scenarios
+* Data increases by 100x
+  - This would be handled using Redshift as it is an analytical database, optimized for aggregations as well as read-heavy workloads
+  - Furthermore, I would increase the cluster size to handle bigger volumes of data
+* Pipelines would run on a daily basis at 7am daily
+  - For this I would utilize DAG replies and send alerts for any failures
+  - Quality checks would be optimized for this
+* The database needed to be accessed by 100+ people
+  - I would utilize Redshift still since it has great auto-scaling capabilities and read performance
 
 ## Acknowledgements
 * I like to thank [Udacity](https://www.udacity.com) for providing an amazing opportunity to enrich my knowledge and broaden my exposure to Big Data and how to implement infrastructure to make analyses on the data.
