@@ -27,7 +27,8 @@ class SqlQueries:
     """)
 
     entry_port_table_insert = ("""
-        SELECT DISTINCT `Entry Port`, CAST(`Travel Mode` AS INT), `Dest State`, `Visa Type`
+        SELECT DISTINCT `Entry Port`,
+               CAST(`Travel Mode` AS INT), `Dest State`, `Visa Type`
         FROM imm_data
         WHERE `Dest State` != "null"
         ORDER BY 1
