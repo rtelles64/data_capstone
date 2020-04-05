@@ -4,55 +4,41 @@ class SqlQueries:
 
     Attributes
     ----------
-    songplay_table_insert : str
-        Sonplay table insert query
-    user_table_insert : str
-        User table insert query
-    song_table_insert : str
-        Song table insert query
-    artist_table_insert : str
-        Artist table insert query
-    time_table_insert : str
-        Time table insert query
+    imm_dem_table_insert : str
+        Immigration_demographic table insert query
+    city_table_insert : str
+        City table insert query
+    entry_port_table_insert : str
+        Entry port table insert query
+    state_table_insert : str
+        State table insert query
     """
-    songplay_table_insert = ("""
-        SELECT
-                md5(events.sessionid || events.start_time) songplay_id,
-                events.start_time,
-                events.userid,
-                events.level,
-                songs.song_id,
-                songs.artist_id,
-                events.sessionid,
-                events.location,
-                events.useragent
-                FROM (SELECT TIMESTAMP 'epoch' + ts/1000 * interval '1 second' AS start_time, *
-            FROM staging_events
-            WHERE page='NextSong') events
-            LEFT JOIN staging_songs songs
-            ON events.song = songs.title
-                AND events.artist = songs.artist_name
-                AND events.length = songs.duration
+    imm_dem_table_insert = ("""
+        SELECT d.City, d.State, d.`State Code`, i.`Travel Mode`,
+               i.Gender, d.`Foreign-born`, d.Race, i.`Visa Type`
+        FROM imm_data i
+        JOIN dem_data d ON d.`State Code` = i.`Dest State`
     """)
 
-    user_table_insert = ("""
-        SELECT distinct userid, firstname, lastname, gender, level
-        FROM staging_events
-        WHERE page='NextSong'
+    city_table_insert = ("""
+        SELECT DISTINCT City, State, `State Code`, Race
+        FROM dem_data
+        ORDER BY State
     """)
 
-    song_table_insert = ("""
-        SELECT distinct song_id, title, artist_id, year, duration
-        FROM staging_songs
+    entry_port_table_insert = ("""
+        SELECT DISTINCT `Entry Port`, CAST(`Travel Mode` AS INT), `Dest State`, `Visa Type`
+        FROM imm_data
+        WHERE `Dest State` != "null"
+        ORDER BY 1
     """)
 
-    artist_table_insert = ("""
-        SELECT distinct artist_id, artist_name, artist_location, artist_latitude, artist_longitude
-        FROM staging_songs
-    """)
-
-    time_table_insert = ("""
-        SELECT start_time, extract(hour from start_time), extract(day from start_time), extract(week from start_time),
-               extract(month from start_time), extract(year from start_time), extract(dayofweek from start_time)
-        FROM songplays
+    state_table_insert = ("""
+        SELECT DISTINCT State,
+               CAST(SUM(`Male Population`) AS INT) AS `Male Pop Total`,
+               CAST(SUM(`Female Population`) AS INT) AS `Fem Pop Total`,
+               CAST(SUM(`Foreign-born`) AS INT) AS `Foreign-born Tot`
+        FROM dem_data
+        GROUP BY 1
+        ORDER BY State, `Foreign-born tot` DESC
     """)
