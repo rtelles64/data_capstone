@@ -47,7 +47,7 @@ CREATE TABLE public.staging_dem (
 CREATE TABLE public.staging_imm (
 	imm_id int NOT NULL AUTO_INCREMENT,
 	entry_port varchar(256),
-	travel_port numeric,
+	travel_mode int,
 	dest_state varchar(256),
 	birth_year int,
 	gender varchar(5),
