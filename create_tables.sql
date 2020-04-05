@@ -1,83 +1,64 @@
-CREATE TABLE public.artists (
-	artistid varchar(256) NOT NULL,
-	name varchar(256),
-	location varchar(256),
-	lattitude numeric(18,0),
-	longitude numeric(18,0)
+CREATE TABLE public.cities (
+	city_id int NOT NULL AUTO_INCREMENT,
+	city varchar(256),
+	state varchar(256),
+	st_code varchar(10),
+	race varchar(256),
+	CONSTRAINT cities_pkey PRIMARY KEY (city_id)
 );
 
-CREATE TABLE public.songplays (
-	playid varchar(32) NOT NULL,
-	start_time timestamp NOT NULL,
-	userid int4 NOT NULL,
-	"level" varchar(256),
-	songid varchar(256),
-	artistid varchar(256),
-	sessionid int4,
-	location varchar(256),
-	user_agent varchar(256),
-	CONSTRAINT songplays_pkey PRIMARY KEY (playid)
+CREATE TABLE public.imm_dem (
+	imm_dem_id int NOT NULL AUTO_INCREMENT,
+	city_id int NOT NULL,
+	city varchar(256),
+	state_id int NOT NULL,
+	state varchar(256),
+	state_code varchar(10),
+	entry_port_id int NOT NULL,
+	travel_mode int,
+	gender varchar(3),
+	foreign_born numeric,
+	race varchar(256),
+	visa_type varchar(5),
+	CONSTRAINT immdem_pkey PRIMARY KEY (imm_dem_id)
 );
 
-CREATE TABLE public.songs (
-	songid varchar(256) NOT NULL,
-	title varchar(256),
-	artistid varchar(256),
-	"year" int4,
-	duration numeric(18,0),
-	CONSTRAINT songs_pkey PRIMARY KEY (songid)
+CREATE TABLE public.entry_ports (
+	entry_port_id int NOT NULL AUTO_INCREMENT,
+	entry_port varchar(256),
+	travel_mode int,
+	dest_state varchar(5),
+	visa_type varchar(5),
+	CONSTRAINT entryport_pkey PRIMARY KEY (entry_port_id)
 );
 
-CREATE TABLE public.staging_events (
-	artist varchar(256),
-	auth varchar(256),
-	firstname varchar(256),
-	gender varchar(256),
-	iteminsession int4,
-	lastname varchar(256),
-	length numeric(18,0),
-	"level" varchar(256),
-	location varchar(256),
-	"method" varchar(256),
-	page varchar(256),
-	registration numeric(18,0),
-	sessionid int4,
-	song varchar(256),
-	status int4,
-	ts int8,
-	useragent varchar(256),
-	userid int4
+CREATE TABLE public.staging_dem (
+	dem_id int NOT NULL AUTO_INCREMENT,
+	city varchar(256),
+	state varchar(256),
+	median_age numeric,
+	male_pop numeric,
+	female_pop numeric,
+	foreign_born numeric,
+	state_code varchar(10),
+	race varchar(256)
 );
 
-CREATE TABLE public.staging_songs (
-	num_songs int4,
-	artist_id varchar(256),
-	artist_name varchar(256),
-	artist_latitude numeric(18,0),
-	artist_longitude numeric(18,0),
-	artist_location varchar(256),
-	song_id varchar(256),
-	title varchar(256),
-	duration numeric(18,0),
-	"year" int4
+CREATE TABLE public.staging_imm (
+	imm_id int NOT NULL AUTO_INCREMENT,
+	entry_port varchar(256),
+	travel_port numeric,
+	dest_state varchar(256),
+	birth_year int,
+	gender varchar(5),
+	visa_type varchar(256)
 );
 
-CREATE TABLE public."time" (
-	start_time timestamp NOT NULL,
-	"hour" int4,
-	"day" int4,
-	week int4,
-	"month" varchar(256),
-	"year" int4,
-	weekday varchar(256),
-	CONSTRAINT time_pkey PRIMARY KEY (start_time)
-) ;
-
-CREATE TABLE public.users (
-	userid int4 NOT NULL,
-	first_name varchar(256),
-	last_name varchar(256),
-	gender varchar(256),
-	"level" varchar(256),
-	CONSTRAINT users_pkey PRIMARY KEY (userid)
+CREATE TABLE public.states (
+	state_id int NOT NULL AUTO_INCREMENT,
+	state varchar(256),
+	male_pop_total bigint,
+	fem_pop_total bigint,
+	foreign_born_tot bigint,
+	CONSTRAINT states_pkey PRIMARY KEY (state_id)
 );
