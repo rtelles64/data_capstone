@@ -17,6 +17,7 @@ As a guideline, the project is broken down into a series of steps:
 **Step 2: Explore and Assess the Data**
 * Explore the data to identify data quality issues (e.g. missing values, duplicate data, etc.)
   - Below are the schemas for the datasets before cleanup:
+  
     **Immigration data**
     ```
     root
