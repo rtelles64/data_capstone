@@ -17,7 +17,7 @@ As a guideline, the project is broken down into a series of steps:
 **Step 2: Explore and Assess the Data**
 * Explore the data to identify data quality issues (e.g. missing values, duplicate data, etc.)
   - Below are the schemas for the datasets before cleanup:
-  
+
     **Immigration data**
     ```
     root
@@ -89,29 +89,30 @@ As a guideline, the project is broken down into a series of steps:
   ```
 
   - This resulted in the following schemas:
-  **Immigration data**
-  ```
-  root
-   |-- Entry Port: string (nullable = true)
-   |-- Travel Mode: double (nullable = true)
-   |-- Dest State: string (nullable = true)
-   |-- Birth Year: integer (nullable = true)
-   |-- Gender: string (nullable = true)
-   |-- Visa Type: string (nullable = true)
-  ```
 
-  **US City Demographics**
-  ```
-  root
-   |-- City: string (nullable = true)
-   |-- State: string (nullable = true)
-   |-- Median Age: double (nullable = true)
-   |-- Male Population: double (nullable = true)
-   |-- Female Population: double (nullable = true)
-   |-- Foreign-born: double (nullable = true)
-   |-- State Code: string (nullable = true)
-   |-- Race: string (nullable = true)
-  ```
+    **Immigration data**
+    ```
+    root
+    |-- Entry Port: string (nullable = true)
+    |-- Travel Mode: double (nullable = true)
+    |-- Dest State: string (nullable = true)
+    |-- Birth Year: integer (nullable = true)
+    |-- Gender: string (nullable = true)
+    |-- Visa Type: string (nullable = true)
+    ```
+
+    **US City Demographics**
+    ```
+    root
+    |-- City: string (nullable = true)
+    |-- State: string (nullable = true)
+    |-- Median Age: double (nullable = true)
+    |-- Male Population: double (nullable = true)
+    |-- Female Population: double (nullable = true)
+    |-- Foreign-born: double (nullable = true)
+    |-- State Code: string (nullable = true)
+    |-- Race: string (nullable = true)
+    ```
 
   - With these new columns, I searched through the data for `null` and `NaN` values and removed them.
   - Afterword I searched for duplicate rows and deleted those.
@@ -135,3 +136,6 @@ As a guideline, the project is broken down into a series of steps:
 The following datasets are used in the project:
 - **I94 Immigration Data:** This data comes from the US National Tourism and Trade Office. [This](https://travel.trade.gov/research/reports/i94/historical/2016.html) is where the data comes from.
 - **U.S. City Demographic Data:** This data comes from OpenSoft. It can be found [here](https://public.opendatasoft.com/explore/dataset/us-cities-demographics/export/).
+
+## Acknowledgements
+* I like to thank [Udacity](https://www.udacity.com) for providing an amazing opportunity to enrich my knowledge and broaden my exposure to Big Data and how to implement infrastructure to make analyses on the data.
